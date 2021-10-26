@@ -1,0 +1,51 @@
+Pequeño editor de código que como mínimo compile Java
+
+Preguntar "desea guardar los cambios" (También al abrir archivo o hacer
+ nuevo si sustituye a lo que haya. En esencia, debería ligarse con guardar,
+que ya tiene la distinción de si existe lo remplaza, y si no
+lo guarda como...)
+
+Seguir guidelines de plataforma o estándares ISO
+
+Con text area no se pueden cambiar colores. Tendría que usarse otro
+formato de cuadro de texto que lo permita. (Javier recomienda
+empezar poniendo textArea al principio y modificarlo posteriormente)
+
+(Puede estar bien mostrar el número de línea y vincular el error a esa línea)
+	Play= java "nombre del archivo"
+	Compile= javac "nombre del archivo"
+
+Todo lo que se pueda hacer con la barra de herramientas de debería poder hacer con los menús
+
+Optional: depurar el código con jdb
+Optional: panel de navegación con las carpetas
+Optional: pestañas, poder abrir varios archivos a la vez en el editor de código
+Optional: colores para la salida y resaltado en colores en el editor
+
+
+metodo compilar(){
+guardarArchivo();
+...
+}
+
+
+método ejecutarComando(){
+guardarArchivo();
+File archivo = documentosAbiertos.get(activePestania).getArchivos();
+...
+}
+
+metodo ejecutarComando(String comando){
+ProcessBuilder builder = new ProcessBuilder();
+...
+boolean isWindows =System.getProperty("os.name").toLowerCase().startsWhith("windows")
+...
+si lo es, mandará el comnado a cmd, /c, comando
+si no, a sh, -c, comando
+
+}
+
+ALmacenamos la ruta donde compilarmos (generar el .class) para luego hacerle el run
+
+http://dar10comyr.blogspot.com/2015/02/componentes-avanzados-jscrollpane-y.html
+Enlace para añadir una barra de progreso al IDE
