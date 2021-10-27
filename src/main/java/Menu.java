@@ -2,6 +2,7 @@ import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
@@ -44,16 +45,36 @@ public class Menu {
     private JMenu menuArchivo() {
         JMenu archivo = new JMenu("Archivo");
 
+        //Por ahora no tiene mucho sentido sin pestañas
         JMenu nuevo = new JMenu("Nuevo");
+        nuevo.addActionListener(ae -> {
+            if (!editor.getText().isEmpty()) {
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Abrir un nuevo documento hará que se borren los cambios no guardados. \n¿Está seguro de que quiere abrirlo de todos modos?");
+                if (respuesta == 0) {
+                    editor.setText("");
+                }
+            } else {
+                editor.setText("");
+            }
+        });
         JMenuItem abrir = new JMenuItem("Abrir");
         abrir.addActionListener(ae -> {
             try {
-                serv.abrirArchivo(editor);
+                if (!editor.getText().isEmpty()) {
+                    int respuesta = JOptionPane.showInternalConfirmDialog(null, "Abrir un nuevo archivo hará que se borren los cambios no guardados. \n¿Está seguro de que quiere abrirlo de todos modos?");
+                    if (respuesta == 0) {
+                        serv.abrirArchivo(editor);
+                    }
+                } else {
+                    serv.abrirArchivo(editor);
+                }
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+        //Por ahora no tiene mucho sentido sin pestañas
         JMenuItem cerrar = new JMenuItem("Cerrar");
 
         JMenuItem guardar = new JMenuItem("Guardar");
@@ -80,7 +101,16 @@ public class Menu {
             }
         });
         JMenuItem salir = new JMenuItem("Salir");
-        salir.addActionListener(ae -> System.exit(0));
+        salir.addActionListener(ae -> {
+            if (!editor.getText().isEmpty()) {
+                int respuesta = JOptionPane.showInternalConfirmDialog(null, "Si sales ahora perderás los cambios no guardados. \n ¿Estás seguro de que quieres salir?");
+                if (respuesta == 0) {
+                    System.exit(0);
+                }
+            } else {
+                System.exit(0);
+            }
+        });
 
         archivo.add(nuevo);
         archivo.add(abrir);
@@ -104,8 +134,51 @@ public class Menu {
             doUndo.RehacerTexto();
         });
         JMenuItem copiar = new JMenuItem("Copiar");
+        copiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+                if (editor.getSelectedText() != null) {
+                    StringSelection seleccion = new StringSelection("" + editor.getSelectedText());
+                    portaPapeles.setContents(seleccion, seleccion);
+                }
+            }
+        });
+
         JMenuItem cortar = new JMenuItem("Cortar");
+        cortar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable datos = portaPapeles.getContents(null);
+                if (editor.getSelectedText() != null) {
+                    StringSelection seleccion = new StringSelection("" + "");
+                    portaPapeles.setContents(seleccion, seleccion);
+                    try {
+                        if (datos != null && datos.isDataFlavorSupported(DataFlavor.stringFlavor))
+                            editor.replaceSelection("" + datos.getTransferData(DataFlavor.stringFlavor));
+                    } catch (UnsupportedFlavorException | IOException ex) {
+                        System.err.println(ex);
+                    }
+                }
+            }
+        });
         JMenuItem pegar = new JMenuItem("Pegar");
+        pegar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable datos = portaPapeles.getContents(null);
+                try {
+                    if (datos != null && datos.isDataFlavorSupported(DataFlavor.stringFlavor))
+                        editor.replaceSelection("" + datos.getTransferData(DataFlavor.stringFlavor));
+                } catch (UnsupportedFlavorException | IOException ex) {
+                    System.err.println(ex);
+                }
+            }
+        });
+
+
         JMenuItem eliminar = new JMenuItem("Eliminar");
 
         edition.add(deshacer);
@@ -129,7 +202,7 @@ public class Menu {
     private JMenu menuHelp() {
         JMenu help = new JMenu("Help");
         JMenuItem sobreMg = new JMenuItem("Sobre MGCode");
-        //sobreMg.addActionListener(ae -> JOptionPane.showMessageDialog(null, "MGG Code es un IDE desarrollado en clase de DI, buscando ser una aplicación simple para escribir y compilar tu código"));
+        sobreMg.addActionListener(ae -> JOptionPane.showMessageDialog(null, "MGG Code es un IDE desarrollado en clase de DI, buscando ser una aplicación simple para escribir y compilar tu código"));
 
         JMenuItem faq = new JMenuItem("Preguntas frecuentes");
         faq.addActionListener(new ActionListener() {

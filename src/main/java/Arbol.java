@@ -63,7 +63,6 @@ public class Arbol implements TreeExpansionListener {
     public void treeExpanded(TreeExpansionEvent event) {
         TreePath path = event.getPath();
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-        // verifica que sea nodo valido
         if (node == null || !(node.getUserObject() instanceof File)) return;
         File f = (File) node.getUserObject();
         actualizaNodo(node, f);
