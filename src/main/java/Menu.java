@@ -3,8 +3,6 @@ import lombok.Data;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URI;
@@ -46,7 +44,7 @@ public class Menu {
         JMenu archivo = new JMenu("Archivo");
 
         //Por ahora no tiene mucho sentido sin pestañas
-        JMenu nuevo = new JMenu("Nuevo");
+        JMenuItem nuevo = new JMenu("Nuevo");
         nuevo.addActionListener(ae -> {
             if (!editor.getText().isEmpty()) {
                 int respuesta = JOptionPane.showInternalConfirmDialog(null, "Abrir un nuevo documento hará que se borren los cambios no guardados. \n¿Está seguro de que quiere abrirlo de todos modos?");
@@ -88,9 +86,7 @@ public class Menu {
         });
 
         JMenuItem guardarComo = new JMenuItem("Guardar como...");
-        guardarComo.addActionListener(ae -> {
-            doc = serv.guardarArchivoComo(editor);
-        });
+        guardarComo.addActionListener(ae -> doc = serv.guardarArchivoComo(editor));
 
         JMenuItem imprimir = new JMenuItem("Imprimir");
         imprimir.addActionListener(ae -> {
@@ -125,56 +121,42 @@ public class Menu {
     private JMenu menuEdition() {
         JMenu edition = new JMenu("Edición");
         JMenuItem deshacer = new JMenuItem("Deshacer");
-        deshacer.addActionListener(ae -> {
-            doUndo.deshacerTexto();
-
-        });
+        deshacer.addActionListener(ae -> doUndo.deshacerTexto());
         JMenuItem rehacer = new JMenuItem("Rehacer");
-        rehacer.addActionListener(ae -> {
-            doUndo.RehacerTexto();
-        });
+        rehacer.addActionListener(ae -> doUndo.RehacerTexto());
         JMenuItem copiar = new JMenuItem("Copiar");
-        copiar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
-                if (editor.getSelectedText() != null) {
-                    StringSelection seleccion = new StringSelection("" + editor.getSelectedText());
-                    portaPapeles.setContents(seleccion, seleccion);
-                }
+        copiar.addActionListener(e -> {
+            Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+            if (editor.getSelectedText() != null) {
+                StringSelection seleccion = new StringSelection("" + editor.getSelectedText());
+                portaPapeles.setContents(seleccion, seleccion);
             }
         });
 
         JMenuItem cortar = new JMenuItem("Cortar");
-        cortar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Transferable datos = portaPapeles.getContents(null);
-                if (editor.getSelectedText() != null) {
-                    StringSelection seleccion = new StringSelection("" + "");
-                    portaPapeles.setContents(seleccion, seleccion);
-                    try {
-                        if (datos != null && datos.isDataFlavorSupported(DataFlavor.stringFlavor))
-                            editor.replaceSelection("" + datos.getTransferData(DataFlavor.stringFlavor));
-                    } catch (UnsupportedFlavorException | IOException ex) {
-                        System.err.println(ex);
-                    }
-                }
-            }
-        });
-        JMenuItem pegar = new JMenuItem("Pegar");
-        pegar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Transferable datos = portaPapeles.getContents(null);
+        cortar.addActionListener(e -> {
+            Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable datos = portaPapeles.getContents(null);
+            if (editor.getSelectedText() != null) {
+                StringSelection seleccion = new StringSelection("" + "");
+                portaPapeles.setContents(seleccion, seleccion);
                 try {
                     if (datos != null && datos.isDataFlavorSupported(DataFlavor.stringFlavor))
                         editor.replaceSelection("" + datos.getTransferData(DataFlavor.stringFlavor));
                 } catch (UnsupportedFlavorException | IOException ex) {
                     System.err.println(ex);
                 }
+            }
+        });
+        JMenuItem pegar = new JMenuItem("Pegar");
+        pegar.addActionListener(e -> {
+            Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Transferable datos = portaPapeles.getContents(null);
+            try {
+                if (datos != null && datos.isDataFlavorSupported(DataFlavor.stringFlavor))
+                    editor.replaceSelection("" + datos.getTransferData(DataFlavor.stringFlavor));
+            } catch (UnsupportedFlavorException | IOException ex) {
+                System.err.println(ex);
             }
         });
 
@@ -205,15 +187,12 @@ public class Menu {
         sobreMg.addActionListener(ae -> JOptionPane.showMessageDialog(null, "MGG Code es un IDE desarrollado en clase de DI, buscando ser una aplicación simple para escribir y compilar tu código"));
 
         JMenuItem faq = new JMenuItem("Preguntas frecuentes");
-        faq.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Desktop enlace = Desktop.getDesktop();
-                try {
-                    enlace.browse(new URI("https://www.jetbrains.com/help/idea/2021.2/getting-started.html"));
-                } catch (IOException | URISyntaxException ex) {
-                    ex.getMessage();
-                }
+        faq.addActionListener(e -> {
+            Desktop enlace = Desktop.getDesktop();
+            try {
+                enlace.browse(new URI("https://www.jetbrains.com/help/idea/2021.2/getting-started.html"));
+            } catch (IOException | URISyntaxException ex) {
+                ex.getMessage();
             }
         });
         help.add(sobreMg);

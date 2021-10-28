@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b08823fa-3758-49d5-8422-e9059ee6d5d1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fonts/powerline.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/bug.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/hammer.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/jugar.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/senal-de-stop.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Practica IDE.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Arbol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Arbol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Documento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Documento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Pestanias.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Vista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -106,5 +95,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

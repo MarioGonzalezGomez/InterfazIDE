@@ -1,6 +1,7 @@
 
 
 import java.io.File;
+import java.util.List;
 import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
@@ -33,7 +34,9 @@ public class Arbol implements TreeExpansionListener {
         modelo = new DefaultTreeModel(top);
         jTree.setModel(modelo);
         jTree.addTreeExpansionListener(this);
-        for (File f : File.listRoots()) {
+        File user = new File(System.getProperty("user.home"));
+        File[] directorios = user.listFiles();
+        for (File f : directorios) {
             DefaultMutableTreeNode raiz = new DefaultMutableTreeNode(f);
             top.add(raiz);
             actualizaNodo(raiz, f);
@@ -48,8 +51,7 @@ public class Arbol implements TreeExpansionListener {
     private boolean actualizaNodo(DefaultMutableTreeNode nodo, File f, int profundidad) {
         File[] files = f.listFiles();
         if (files != null && profundidad > 0) {
-            for (File file : files)
-            {
+            for (File file : files) {
                 DefaultMutableTreeNode nuevo = new DefaultMutableTreeNode(file);
                 actualizaNodo(nuevo, file, profundidad - 1);
                 nodo.add(nuevo);

@@ -67,15 +67,18 @@ public class Vista extends JFrame {
         explorador = new JTree();
         arbol.setJTree(explorador);
         arbol.init();
-        explorador.setBackground(new Color(255, 0, 249, 11));
+
+        explorador.setBackground(new Color(255, 195, 252));
 
 
         editor = new JTextArea();
-        //editor.setBackground(new Color(255, 0, 249, 18));
+        editor.setBackground(new Color(253, 227, 247));
         Font nuevaTipo = ponerTipo();
         editor.setFont(nuevaTipo);
         consola = new JTextArea();
-        consola.setBackground(new Color(255, 0, 249, 11));
+        consola.setBackground(new Color(255, 195, 252));
+
+
         jspEditor = new JScrollPane();
         jspConsola = new JScrollPane();
         jspExplorador = new JScrollPane();
@@ -121,14 +124,15 @@ public class Vista extends JFrame {
         archivoEditor = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, jspExplorador, jspEditor);
         editorConsola = new JSplitPane(JSplitPane.VERTICAL_SPLIT, archivoEditor, jspConsola);
 
-        archivoEditor.setDividerLocation(500);
+        archivoEditor.setDividerLocation(170);
         archivoEditor.setOneTouchExpandable(true);
         archivoEditor.setMinimumSize(new Dimension(50, 50));
-        editorConsola.setDividerLocation(500);
+        editorConsola.setDividerLocation(400);
         editorConsola.setOneTouchExpandable(true);
         editorConsola.setMinimumSize(new Dimension(50, 50));
 
         panelPrincipal.add(editorConsola, BorderLayout.CENTER);
+        panelPrincipal.setOpaque(true);
 
         borrable = new JTextArea("Barra de estado...............................");
         borrable.setFont(nuevaTipo);
