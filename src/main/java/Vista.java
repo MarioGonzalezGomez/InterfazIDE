@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 
@@ -75,6 +76,7 @@ public class Vista extends JFrame {
         editor.setBackground(new Color(253, 227, 247));
         Font nuevaTipo = ponerTipo();
         editor.setFont(nuevaTipo);
+        ponerPortapapeles();
         consola = new JTextArea();
         consola.setBackground(new Color(255, 195, 252));
 
@@ -97,8 +99,22 @@ public class Vista extends JFrame {
         barra = new JSeparator(JSeparator.VERTICAL);
         JButton compilar = new JButton();
         compilar.setIcon(hammer);
+        compilar.addActionListener(x -> {
+            try {
+                compilar();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         JButton run = new JButton();
         run.setIcon(play);
+        run.addActionListener(x -> {
+            try {
+                ejecutar();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         JButton debug = new JButton();
         debug.setIcon(bug);
         JButton stop = new JButton();
@@ -190,6 +206,28 @@ public class Vista extends JFrame {
             System.err.println(Arrays.toString(e.getStackTrace()));
             return null;
         }
+    }
+
+    private void ejecutarComandos(String comando) throws IOException {
+        ProcessBuilder builder = new ProcessBuilder();
+        Process process = null;
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
+        System.out.println(comando);
+        if (isWindows) {
+            builder.command("cmd.exe", "/c", comando);
+        } else {
+            builder.command("sh", "-c", comando);
+        }
+        builder.start();
+    }
+
+    private void compilar() throws IOException {
+        ejecutarComandos("javac " + (System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "App"));
+
+    }
+
+    private void ejecutar() throws IOException {
+        ejecutarComandos("java " + (System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "App"));
     }
 
     public JPanel getPanelPrincipal() {
