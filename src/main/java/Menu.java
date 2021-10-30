@@ -16,7 +16,7 @@ public class Menu {
 
     private JMenuBar tools;
     private JTextArea editor;
-    private Documento doc = null;
+    private Documento doc = new Documento();
 
     public Menu(JTextArea editor) {
         this.editor = editor;
@@ -62,10 +62,10 @@ public class Menu {
                 if (!editor.getText().isEmpty()) {
                     int respuesta = JOptionPane.showInternalConfirmDialog(null, "Abrir un nuevo archivo hará que se borren los cambios no guardados. \n¿Está seguro de que quiere abrirlo de todos modos?");
                     if (respuesta == 0) {
-                        serv.abrirArchivo(editor);
+                        doc = serv.abrirArchivo(editor);
                     }
                 } else {
-                    serv.abrirArchivo(editor);
+                    doc = serv.abrirArchivo(editor);
                 }
 
 

@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b08823fa-3758-49d5-8422-e9059ee6d5d1" name="Changes" comment="">
+    <list default="true" id="b08823fa-3758-49d5-8422-e9059ee6d5d1" name="Changes" comment="Colores reparados, portapapeles funcional, añadido compilar y ejecutar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servicios.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Vista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +79,16 @@
       <option name="presentableId" value="Default" />
       <updated>1633433323781</updated>
       <workItem from="1635353265596" duration="8149000" />
+      <workItem from="1635609214783" duration="4279000" />
     </task>
+    <task id="LOCAL-00001" summary="Colores reparados, portapapeles funcional, añadido compilar y ejecutar">
+      <created>1635451642562</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1635451642562</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,5 +105,24 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Colores reparados, portapapeles funcional, añadido compilar y ejecutar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Colores reparados, portapapeles funcional, añadido compilar y ejecutar" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="4" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Servicios.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

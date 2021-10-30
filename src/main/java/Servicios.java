@@ -1,5 +1,6 @@
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -8,6 +9,7 @@ import java.io.*;
 @Data
 @NoArgsConstructor
 public class Servicios {
+
     public Documento abrirArchivo(JTextArea editor) throws IOException {
         JFileChooser selector = new JFileChooser();
         selector.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -41,7 +43,7 @@ public class Servicios {
         }
     }
 
-    public void guardar(Documento doc, JTextArea editor) {
+    public void guardar(Documento doc, @NotNull JTextArea editor) {
         String text;
         if (editor.getText() != null) {
             text = editor.getText();
@@ -59,7 +61,7 @@ public class Servicios {
         }
     }
 
-    public Documento guardarArchivoComo(JTextArea editor) {
+    public Documento guardarArchivoComo(@NotNull JTextArea editor) {
         Documento documento = new Documento();
         String text;
         if (editor.getText() != null) {

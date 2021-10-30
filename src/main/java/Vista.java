@@ -1,17 +1,16 @@
+import org.jetbrains.annotations.Nullable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.awt.event.*;
+import java.io.*;
 import java.util.Arrays;
 
 
 public class Vista extends JFrame {
+    Servicios serv = new Servicios();
+    Menu menu;
     private JPanel panelPrincipal;
 
     private JSplitPane editorConsola;
@@ -90,7 +89,7 @@ public class Vista extends JFrame {
         jspEditor.setViewportView(editor);
         jspConsola.setViewportView(consola);
 
-        Menu menu = new Menu(editor);
+        menu = new Menu(editor);
 
         this.setJMenuBar(menu.getTools());
 
@@ -108,13 +107,17 @@ public class Vista extends JFrame {
         });
         JButton run = new JButton();
         run.setIcon(play);
-        run.addActionListener(x -> {
-            try {
-                ejecutar();
-            } catch (IOException e) {
-                e.printStackTrace();
+        run.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    consola.setText(ejecutar());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
+
         JButton debug = new JButton();
         debug.setIcon(bug);
         JButton stop = new JButton();
@@ -180,7 +183,7 @@ public class Vista extends JFrame {
         editor.getDocument().addUndoableEditListener(unDo.getDeshacer());
     }
 
-    public void ponerPortapapeles() {
+    private void ponerPortapapeles() {
         Clipboard portaPapeles = Toolkit.getDefaultToolkit().getSystemClipboard();
         if (editor.getSelectedText() != null) {
             StringSelection seleccion = new StringSelection("" + editor.getSelectedText());
@@ -196,7 +199,7 @@ public class Vista extends JFrame {
 
     }
 
-    public Font ponerTipo() {
+    private Font ponerTipo() {
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File(rutaFuente)).deriveFont(12f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -221,13 +224,44 @@ public class Vista extends JFrame {
         builder.start();
     }
 
-    private void compilar() throws IOException {
-        ejecutarComandos("javac " + (System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "App"));
+    private @Nullable File compilar() throws IOException {
+        try {
+            File archivo;
+            if (menu.getDoc().getRuta() == null) {
+                archivo = serv.guardarArchivoComo(editor).getRuta();
+            } else {
+                serv.guardar(menu.getDoc(), editor);
+                archivo = menu.getDoc().getRuta();
+            }
+            ejecutarComandos("javac " + archivo.getAbsolutePath());
 
+            return archivo;
+        } catch (IOException e) {
+            e.printStackTrace();
+            ejecutarComandos("echo " + "\"ha ocurrido un error\"");
+            return null;
+        }
     }
 
-    private void ejecutar() throws IOException {
-        ejecutarComandos("java " + (System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "App"));
+    private String ejecutar() throws IOException {
+        String result = "";
+        Process process = null;
+        try {
+            File archivo = compilar();
+            if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+                process = Runtime.getRuntime().exec("cmd /c java " + archivo.getAbsolutePath());
+                BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                result = br.readLine();
+            } else {
+                compilar();
+                process = Runtime.getRuntime().exec("sh -c java " + archivo.getAbsolutePath());
+                BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                result = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public JPanel getPanelPrincipal() {
