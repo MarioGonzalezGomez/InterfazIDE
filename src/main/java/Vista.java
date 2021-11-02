@@ -213,15 +213,17 @@ public class Vista extends JFrame {
 
     private void ejecutarComandos(String comando) throws IOException {
         ProcessBuilder builder = new ProcessBuilder();
-        Process process = null;
+        // Process process = null;
         boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
         System.out.println(comando);
         if (isWindows) {
-            builder.command("cmd.exe", "/c", comando);
+            builder.command("cmd.exe", " /c ", comando);
         } else {
-            builder.command("sh", "-c", comando);
+            builder.command("sh", " -c ", comando);
         }
         builder.start();
+        // builder.redirectError();
+        //builder.redirectOutput();
     }
 
     private @Nullable File compilar() throws IOException {
@@ -229,11 +231,12 @@ public class Vista extends JFrame {
             File archivo;
             if (menu.getDoc().getRuta() == null) {
                 archivo = serv.guardarArchivoComo(editor).getRuta();
+                menu.getDoc().setRuta(archivo);
             } else {
                 serv.guardar(menu.getDoc(), editor);
                 archivo = menu.getDoc().getRuta();
             }
-            ejecutarComandos("javac " + archivo.getAbsolutePath());
+            ejecutarComandos("javac " + "\"" + archivo.getAbsolutePath() + "\"");
 
             return archivo;
         } catch (IOException e) {
@@ -249,15 +252,24 @@ public class Vista extends JFrame {
         try {
             File archivo = compilar();
             if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-                process = Runtime.getRuntime().exec("cmd /c java " + archivo.getAbsolutePath());
+                process = Runtime.getRuntime().exec("cmd /c java " + "\"" + archivo.getAbsolutePath().replaceAll("java", "class") + "\"");
                 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 result = br.readLine();
+                while (result != null) {
+                    consola.append(result + "\n");
+                    result = br.readLine();
+                }
             } else {
                 compilar();
                 process = Runtime.getRuntime().exec("sh -c java " + archivo.getAbsolutePath());
                 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 result = br.readLine();
+                while (result != null) {
+                    consola.append(result + "\n");
+                    result = br.readLine();
+                }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

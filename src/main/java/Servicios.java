@@ -15,6 +15,7 @@ public class Servicios {
         selector.setCurrentDirectory(new File(System.getProperty("user.home")));
         selector.setFileSelectionMode(JFileChooser.FILES_ONLY);
         selector.addChoosableFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+        selector.addChoosableFileFilter(new FileNameExtensionFilter("Clases java (*.java)", "java"));
         selector.setAcceptAllFileFilterUsed(false);
 
         int option = selector.showOpenDialog(editor);
@@ -75,6 +76,7 @@ public class Servicios {
         selector.setCurrentDirectory(new File(System.getProperty("user.home")));
         selector.setFileSelectionMode(JFileChooser.FILES_ONLY);
         selector.addChoosableFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+        selector.addChoosableFileFilter(new FileNameExtensionFilter("Clases java (*.java)", "java"));
         selector.setAcceptAllFileFilterUsed(false);
 
         int option = selector.showSaveDialog(editor);
@@ -83,7 +85,7 @@ public class Servicios {
 
         if (option == JFileChooser.APPROVE_OPTION) {
             if (!archivo.getName().endsWith(".txt")) {
-                archivo = new File(archivo.getPath() + ".txt");
+                //archivo = new File(archivo.getPath() + ".txt");
 
             }
             if (!archivo.exists()) {
