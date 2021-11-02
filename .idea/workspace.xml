@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b08823fa-3758-49d5-8422-e9059ee6d5d1" name="Changes" comment="Intento de ejecutar en consola, sin terminar">
+    <list default="true" id="b08823fa-3758-49d5-8422-e9059ee6d5d1" name="Changes" comment="Intentando reparar el ejecutar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Servicios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servicios.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Vista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Vista.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,7 +80,9 @@
       <updated>1633433323781</updated>
       <workItem from="1635353265596" duration="8149000" />
       <workItem from="1635609214783" duration="4779000" />
-      <workItem from="1635880643124" duration="3562000" />
+      <workItem from="1635880643124" duration="3813000" />
+      <workItem from="1635884660627" duration="289000" />
+      <workItem from="1635888989323" duration="2249000" />
     </task>
     <task id="LOCAL-00001" summary="Colores reparados, portapapeles funcional, añadido compilar y ejecutar">
       <created>1635451642562</created>
@@ -97,7 +98,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635613756824</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Intentando reparar el ejecutar">
+      <created>1635884479560</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1635884479560</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,7 +126,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Colores reparados, portapapeles funcional, añadido compilar y ejecutar" />
     <MESSAGE value="Intento de ejecutar en consola, sin terminar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Intento de ejecutar en consola, sin terminar" />
+    <MESSAGE value="Intentando reparar el ejecutar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Intentando reparar el ejecutar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -127,11 +136,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="4" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Vista.java</url>
-          <line>240</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
